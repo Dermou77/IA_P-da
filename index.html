@@ -138,7 +138,7 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
   <button class="quick-btn" onclick="insertPrompt('tp')">⚡ TP Complet</button>
   <button class="quick-btn" onclick="insertPrompt('qcm')">📝 Générer QCM</button>
   <button class="quick-btn" onclick="insertPrompt('config')">⚙️ Script Config</button>
-  <button class="quick-btn" onclick="insertPrompt('vulga')">🎓 Vulgarisation</button>
+  <button class="quick-btn" onclick="insertPrompt('cours')">📘 Cours & TP Complet</button>
 </div>
 
 <div id="input-container">
@@ -385,7 +385,7 @@ window.insertPrompt = (t) => {
   if(t==='tp') p="Agis comme un expert réseau formateur. Génère un TP de 2h sur [Sujet]. Structure : 1. Contexte, 2. Objectifs, 3. Adressage IP, 4. Configuration, 5. Vérification.";
   if(t==='qcm') p="Crée un QCM de 10 questions sur [Sujet] niveau CCNA. Donne 4 choix, la bonne réponse, et une courte explication.";
   if(t==='config') p="Rédige un script de configuration commenté pour mettre en place : [Sujet].";
-  if(t==='vulga') p="Explique le concept [Sujet] avec une analogie simple pour des étudiants débutants.";
+  if(t==='cours') p="Agis comme un ingénieur système et réseau expert, formateur pour des étudiants (type BTS SIO SISR). Ton objectif est de rédiger un document de Cours & TP complet, professionnel et structuré sur le sujet suivant : [INSÉRER LE SUJET]. Les technologies principales utilisées seront : [INSÉRER LES TECHNOS].\n\nTu dois impérativement générer le contenu en respectant la structure et le formatage exacts ci-dessous. Pour simuler la pagination, insère le marqueur \"--- PAGE [Numéro] ---\" en bas de chaque section logique.\n\n1. PAGE DE GARDE\n2. TABLE DES MATIÈRES\n3. INTRODUCTION\n4. PARTIE PRATIQUE (LE TP)\n5. DÉPANNAGE (TROUBLESHOOTING)\n6. CONCLUSION\n7. RESSOURCES ET SOURCES";
   $("#user-input").value = p; $("#user-input").focus();
 };
 
