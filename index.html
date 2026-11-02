@@ -225,6 +225,10 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
     
     <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
       <div>
+        <label class="field-label">Clé Google Gemini (Google AI Studio)</label>
+        <input type="password" class="field-input" id="key-google" placeholder="Clé Google (ex: AIzaSy...)">
+      </div>
+      <div>
         <label class="field-label">Clé Mistral AI</label>
         <input type="password" class="field-input" id="key-mistral" placeholder="Clé Mistral (ex: api_...)">
       </div>
@@ -268,8 +272,18 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <script>
-// CONFIGURATION FOURNISSEURS & MODÈLES COMPATIBLES
+// CONFIGURATION DES FOURNISSEURS (AVEC GOOGLE GEMINI)
 const PROVIDERS = {
+  google: {
+    name: "Google Gemini",
+    endpoint: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+    storageKey: "key_google",
+    models: [
+      { id: "gemini-2.5-flash", name: "✨ Gemini 2.5 Flash" },
+      { id: "gemini-2.5-pro", name: "🧠 Gemini 2.5 Pro" },
+      { id: "gemini-2.5-flash-lite", name: "⚡ Gemini 2.5 Flash Lite" }
+    ]
+  },
   mistral: {
     name: "Mistral AI",
     endpoint: "https://api.mistral.ai/v1/chat/completions",
@@ -313,7 +327,7 @@ const PROVIDERS = {
 
 const DB_NAME = "SYSNET_STUDIO_DB";
 const DB_VERSION = 1;
-let state = { chatId: null, messages: [], model: "mistral-large-2411", attachedFile: null };
+let state = { chatId: null, messages: [], model: "gemini-2.5-flash", attachedFile: null };
 let archiveSearchQuery = "";
 
 const $ = s => document.querySelector(s);
@@ -336,7 +350,7 @@ function getProviderForModel(modelId) {
       return { providerKey: key, ...provider };
     }
   }
-  return { providerKey: 'mistral', ...PROVIDERS.mistral };
+  return { providerKey: 'google', ...PROVIDERS.google };
 }
 
 function updateStatusPill() {
