@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SYS-NET STUDIO — Formateur IT</title>
+<title>SYS-NET STUDIO — Formateur IT Multi-LLM</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -23,9 +23,6 @@
   --header-bg: rgba(5, 13, 24, 0.95); --panel-bg: rgba(9, 21, 37, 0.98);
 }
 
-/* ═══════════════════════════════════════════
-   THÈME CLAIR
-   ═══════════════════════════════════════════ */
 :root[data-theme="light"] {
   --void: #f4f7f6; --deep: #ffffff; --hull: #eef2f5; --plate: #e2e8f0;
   --grid: #cbd5e1; --wire: #94a3b8; --cyan: #0070a8; --cyan-dim: rgba(0, 112, 168, 0.1);
@@ -41,7 +38,6 @@
 :root[data-theme="light"] .message-content pre code { color: #24292e; background: none; }
 :root[data-theme="light"] .message.user { background: #e0f2fe; border: 1px solid #bae6fd; }
 :root[data-theme="light"] #sysnet-header { border-bottom: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -78,7 +74,7 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
 .message.assistant { align-self: flex-start; background: var(--hull); border: var(--border); border-left: 2px solid var(--cyan); }
 .msg-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 6px; }
 
-/* RENDU MARKDOWN DANS LE CHAT */
+/* RENDU MARKDOWN */
 .message-content { font-size: 14px; }
 .message-content p { margin-bottom: 10px; }
 .message-content pre { background: #020509; padding: 10px; border-radius: 5px; overflow-x: auto; border: 1px solid var(--wire); margin: 10px 0;}
@@ -129,12 +125,13 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
 /* MODALS */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
 .modal-overlay.active { display: flex; }
-.modal-box { background: var(--deep); border: var(--hud-border); border-radius: var(--r-lg); width: 100%; max-width: 500px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);}
-.field-input { width: 100%; background: var(--hull); border: var(--hud-border); color: var(--text-bright); padding: 11px 14px; border-radius: var(--r); outline: none; margin-bottom: 16px; margin-top: 8px;}
+.modal-box { background: var(--deep); border: var(--hud-border); border-radius: var(--r-lg); width: 100%; max-width: 520px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);}
+.field-input { width: 100%; background: var(--hull); border: var(--hud-border); color: var(--text-bright); padding: 9px 12px; border-radius: var(--r); outline: none; font-size: 12px; }
+.field-label { font-family: var(--font-mono); font-size: 11px; color: var(--cyan); margin-bottom: 4px; display: block; }
 .btn-primary { background: var(--cyan-dim); border: var(--border-cyan); color: var(--cyan); padding: 10px 20px; border-radius: var(--r); cursor: pointer; width: 100%; font-family: var(--font-display); transition: 0.2s; }
 .btn-primary:hover { background: var(--cyan); color: var(--deep); }
 
-/* --- APERÇU PRO DOCUMENT --- */
+/* APERÇU DU DOCUMENT */
 #preview-container { flex: 1; background: #ffffff; color: #333333; border-radius: 4px; overflow-y: auto; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; padding: 40px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
 #preview-container h1 { color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 8px; margin-top: 0; }
 #preview-container h2 { color: #0070a8; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px;}
@@ -148,7 +145,6 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
 #preview-container th { background-color: #f6f8fa; font-weight: bold; }
 #preview-container blockquote { border-left: 4px solid #dfe2e5; color: #6a737d; padding: 0 1em; margin-left: 0; font-style: italic;}
 
-/* CACHER L'UI DU STUDIO PENDANT L'IMPRESSION PDF */
 @media print {
   body * { visibility: hidden; }
   #editor-modal, #editor-modal * { visibility: visible; }
@@ -185,7 +181,7 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
   </div>
   <div class="header-controls">
     <span class="status-pill" id="api-status">OFFLINE</span>
-    <button class="hud-btn primary" id="open-api-modal">🔑 CLÉ API</button>
+    <button class="hud-btn primary" id="open-api-modal">🔑 CLÉS API</button>
   </div>
 </header>
 
@@ -222,10 +218,30 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
   <div class="archives-list" id="archives-list"></div>
 </div>
 
+<!-- MODAL GESTION MULTI-API -->
 <div class="modal-overlay" id="api-modal">
   <div class="modal-box">
-    <h3 style="font-family: var(--font-display); color: var(--cyan);">🔑 CLÉ API MISTRAL</h3>
-    <input type="password" class="field-input" id="api-key-input" placeholder="Collez votre clé ici…">
+    <h3 style="font-family: var(--font-display); color: var(--cyan); margin-bottom: 16px;">🔑 GESTION DES CLÉS API</h3>
+    
+    <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+      <div>
+        <label class="field-label">Clé Mistral AI</label>
+        <input type="password" class="field-input" id="key-mistral" placeholder="Clé Mistral (ex: api_...)">
+      </div>
+      <div>
+        <label class="field-label">Clé OpenAI</label>
+        <input type="password" class="field-input" id="key-openai" placeholder="Clé OpenAI (ex: sk-...)">
+      </div>
+      <div>
+        <label class="field-label">Clé Groq</label>
+        <input type="password" class="field-input" id="key-groq" placeholder="Clé Groq (ex: gsk_...)">
+      </div>
+      <div>
+        <label class="field-label">Clé OpenRouter</label>
+        <input type="password" class="field-input" id="key-openrouter" placeholder="Clé OpenRouter (ex: sk-or-...)">
+      </div>
+    </div>
+
     <button class="btn-primary" id="save-api-key">💾 ENREGISTRER</button>
     <button class="hud-btn" id="close-api-modal" style="width: 100%; margin-top: 10px;">Annuler</button>
   </div>
@@ -252,17 +268,52 @@ body { font-family: var(--font-body); background: var(--void); color: var(--text
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <script>
-const MODELS = [
-  { id:"mistral-large-2512", name:"🧠 Mistral Large", temp:0.48 },
-  { id:"mistral-small-2603", name:"⚡ Mistral Small", temp:0.42 },
-  { id:"pixtral-large-2411", name:"👁️ Pixtral (Images)", temp:0.42 },
-  { id:"open-mistral-nemo", name:"💻 Mistral Nemo", temp:0.42 }
-];
+// CONFIGURATION FOURNISSEURS & MODÈLES COMPATIBLES
+const PROVIDERS = {
+  mistral: {
+    name: "Mistral AI",
+    endpoint: "https://api.mistral.ai/v1/chat/completions",
+    storageKey: "key_mistral",
+    models: [
+      { id: "mistral-large-2411", name: "🧠 Mistral Large" },
+      { id: "mistral-small-latest", name: "⚡ Mistral Small" },
+      { id: "pixtral-12b-2409", name: "👁️ Pixtral (Images)" },
+      { id: "open-mistral-nemo", name: "💻 Mistral Nemo" }
+    ]
+  },
+  openai: {
+    name: "OpenAI",
+    endpoint: "https://api.openai.com/v1/chat/completions",
+    storageKey: "key_openai",
+    models: [
+      { id: "gpt-4o", name: "🚀 GPT-4o (Vision)" },
+      { id: "gpt-4o-mini", name: "⚡ GPT-4o Mini" }
+    ]
+  },
+  groq: {
+    name: "Groq (Ultra Rapide)",
+    endpoint: "https://api.groq.com/openai/v1/chat/completions",
+    storageKey: "key_groq",
+    models: [
+      { id: "llama-3.3-70b-versatile", name: "🦙 Llama 3.3 70B" },
+      { id: "mixtral-8x7b-32768", name: "⚡ Mixtral 8x7B" }
+    ]
+  },
+  openrouter: {
+    name: "OpenRouter",
+    endpoint: "https://openrouter.ai/api/v1/chat/completions",
+    storageKey: "key_openrouter",
+    models: [
+      { id: "anthropic/claude-3.5-sonnet", name: "🎭 Claude 3.5 Sonnet" },
+      { id: "meta-llama/llama-3.1-70b-instruct", name: "🦙 Llama 3.1 70B" },
+      { id: "deepseek/deepseek-chat", name: "🐋 DeepSeek V3" }
+    ]
+  }
+};
 
 const DB_NAME = "SYSNET_STUDIO_DB";
 const DB_VERSION = 1;
-let state = { apiKey: null, chatId: null, messages: [], model: "mistral-large-2512", attachedFile: null };
-
+let state = { chatId: null, messages: [], model: "mistral-large-2411", attachedFile: null };
 let archiveSearchQuery = "";
 
 const $ = s => document.querySelector(s);
@@ -278,6 +329,28 @@ const toast = (msg, type = "info") => {
 
 const setLocalKey = (n, v) => localStorage.setItem('sysnet_' + n, v);
 const getLocalKey = n => localStorage.getItem('sysnet_' + n);
+
+function getProviderForModel(modelId) {
+  for (const [key, provider] of Object.entries(PROVIDERS)) {
+    if (provider.models.some(m => m.id === modelId)) {
+      return { providerKey: key, ...provider };
+    }
+  }
+  return { providerKey: 'mistral', ...PROVIDERS.mistral };
+}
+
+function updateStatusPill() {
+  const current = getProviderForModel(state.model);
+  const activeKey = getLocalKey(current.storageKey);
+  const pill = $("#api-status");
+  if (activeKey && activeKey.length > 5) {
+    pill.textContent = `${current.name.split(' ')[0]} : ONLINE`;
+    pill.className = "status-pill active";
+  } else {
+    pill.textContent = `${current.name.split(' ')[0]} : NO KEY`;
+    pill.className = "status-pill";
+  }
+}
 
 const db = {
   open: () => new Promise((res, rej) => {
@@ -299,8 +372,6 @@ async function renderArchives() {
   if (!list) return;
   let chats = await db.getAll('chats') || [];
   chats.sort((a, b) => b.updated - a.updated);
-
-  // FILTRE IMPORTANT : On retire les conversations vides de l'affichage
   chats = chats.filter(c => c.messages && c.messages.some(m => m.role === 'user'));
 
   if (archiveSearchQuery.trim() !== "") {
@@ -333,13 +404,19 @@ window.loadChat = async (id) => {
   const chat = await db.get('chats', id);
   if (chat) {
     state.chatId = chat.id; state.messages = chat.messages; state.model = chat.model || state.model;
-    $("#model-select").value = state.model; renderMessages();
+    $("#model-select").value = state.model;
+    updateStatusPill();
+    renderMessages();
     $("#archives-panel").classList.remove("active");
   }
 };
 
 window.deleteChat = async (id) => {
-  if (confirm("Supprimer ce cours de l'historique ?")) { await db.delete('chats', id); if (state.chatId === id) newChat(); renderArchives(); }
+  if (confirm("Supprimer ce cours de l'historique ?")) { 
+    await db.delete('chats', id); 
+    if (state.chatId === id) newChat(); 
+    renderArchives(); 
+  }
 };
 
 function initFileUpload() {
@@ -371,10 +448,7 @@ window.clearAttachedFile = () => { state.attachedFile = null; updateFilePreview(
 window.openEditor = (id) => {
   const msg = state.messages.find(m => m.id === id);
   if (!msg) return;
-  
-  const htmlContent = marked.parse(msg.content);
-  $("#preview-container").innerHTML = htmlContent;
-  
+  $("#preview-container").innerHTML = marked.parse(msg.content);
   $("#editor-modal").dataset.msgId = id;
   $("#editor-modal").classList.add("active");
 };
@@ -385,7 +459,6 @@ window.exportToHtml = () => {
   if (!msg) return;
 
   const htmlContent = marked.parse(msg.content);
-  
   const html = `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -417,7 +490,7 @@ window.exportToHtml = () => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `Cours_IT_${now()}.html`;
+  a.download = `Support_IT_${now()}.html`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -435,7 +508,9 @@ function renderMessages() {
   msgs.forEach(m => {
     const div = document.createElement("div"); div.className = `message ${m.role}`;
     let imgHtml = '';
-    if (m.attachedData && m.attachedData.type === 'image') { imgHtml = `<img src="${m.attachedData.data}" style="max-width:100%; border-radius:6px; margin-bottom:12px; border:1px solid var(--wire);">`; }
+    if (m.attachedData && m.attachedData.type === 'image') { 
+      imgHtml = `<img src="${m.attachedData.data}" style="max-width:100%; border-radius:6px; margin-bottom:12px; border:1px solid var(--wire);">`; 
+    }
     
     const textContent = m.role === 'assistant' ? marked.parse(m.content || '') : escapeHtml(m.content || '');
     const action = m.role === 'assistant' ? `<div class="msg-actions"><button class="action-btn" onclick="openEditor('${m.id}')">📄 Aperçu & Export Pro</button></div>` : '';
@@ -451,13 +526,12 @@ window.insertPrompt = (t) => {
   if(t==='tp') p="Agis comme un expert réseau formateur. Génère un TP de 2h sur [Sujet]. Structure : 1. Contexte, 2. Objectifs, 3. Adressage IP, 4. Configuration, 5. Vérification.";
   if(t==='qcm') p="Crée un QCM de 10 questions sur [Sujet] niveau CCNA. Donne 4 choix, la bonne réponse, et une courte explication.";
   if(t==='config') p="Rédige un script de configuration commenté pour mettre en place : [Sujet].";
-  if(t==='cours') p="Agis comme un ingénieur système et réseau expert, formateur pour des étudiants (type BTS SIO SISR). Ton objectif est de rédiger un document de Cours & TP complet, professionnel et structuré sur le sujet suivant : [INSÉRER LE SUJET]. Les technologies principales utilisées seront : [INSÉRER LES TECHNOS].\n\nTu dois impérativement générer le contenu en respectant la structure et le formatage exacts ci-dessous. Pour simuler la pagination, insère le marqueur \"--- PAGE [Numéro] ---\" en bas de chaque section logique.\n\n1. PAGE DE GARDE\n2. TABLE DES MATIÈRES\n3. INTRODUCTION\n4. PARTIE PRATIQUE (LE TP)\n5. DÉPANNAGE (TROUBLESHOOTING)\n6. CONCLUSION\n7. RESSOURCES ET SOURCES";
-  if(t==='schema') p="Agis comme un architecte réseau. Je souhaite que tu génères le code exact pour représenter l'architecture suivante avec Mermaid.js : [DÉCRIRE LE SCHÉMA]. Ne génère que le bloc de code Mermaid, sans autre texte explicatif, prêt à être copié-collé dans un éditeur.";
+  if(t==='cours') p="Agis comme un ingénieur système et réseau expert, formateur pour des étudiants (type BTS SIO SISR). Rédige un document de Cours & TP complet et structuré sur : [SUJET]. Technologies : [TECHNOS].\n\nStructure :\n1. PAGE DE GARDE\n2. TABLE DES MATIÈRES\n3. INTRODUCTION\n4. PARTIE PRATIQUE (LE TP)\n5. DÉPANNAGE (TROUBLESHOOTING)\n6. CONCLUSION\n7. RESSOURCES";
+  if(t==='schema') p="Agis comme un architecte réseau. Génère le code exact pour représenter l'architecture suivante avec Mermaid.js : [DÉCRIRE LE SCHÉMA]. Ne génère que le bloc de code Mermaid, sans autre texte explicatif.";
   $("#user-input").value = p; $("#user-input").focus();
 };
 
 async function saveChat() { 
-  // FIX IMPORTANT : On ne sauvegarde QUE si l'utilisateur a envoyé un message (longueur > 1, car le 1er est le message system)
   if (state.chatId && state.messages.length > 1) { 
     await db.put('chats', { id: state.chatId, model: state.model, messages: state.messages, updated: now() }); 
     renderArchives(); 
@@ -467,16 +541,23 @@ async function saveChat() {
 window.newChat = async () => {
   state.chatId = uuid(); 
   state.messages = [{ role:"system", content:"Tu es un assistant expert en Ingénierie Système et Réseau, spécialisé dans la pédagogie." }];
-  // FIX IMPORTANT : On enlève le "saveChat()" au démarrage pour éviter les conversations vides.
   renderMessages(); 
-  renderArchives(); // Actualise la liste
+  renderArchives();
   $("#archives-panel").classList.remove("active");
 };
 
 async function sendMessage() {
   const txt = $("#user-input").value.trim(); 
   if (!txt && !state.attachedFile) return; 
-  if (!state.apiKey) { $("#api-modal").classList.add("active"); return; }
+
+  const provider = getProviderForModel(state.model);
+  const activeKey = getLocalKey(provider.storageKey);
+
+  if (!activeKey) { 
+    toast(`Clé manquante pour ${provider.name}.`, "error");
+    $("#api-modal").classList.add("active"); 
+    return; 
+  }
   
   const mid = uuid();
   let uiMessage = txt;
@@ -494,40 +575,98 @@ async function sendMessage() {
   const attachedData = state.attachedFile && state.attachedFile.type === 'image' ? { ...state.attachedFile } : null;
 
   state.messages.push({ id: mid, role: "user", content: uiMessage, apiContent: apiPrompt, attachedData: attachedData, ts: now() });
-  renderMessages(); $("#user-input").value = ""; $("#send-btn").disabled = true;
-  await saveChat(); // Sauvegarde déclenchée au 1er envoi !
+  renderMessages(); 
+  $("#user-input").value = ""; 
+  $("#send-btn").disabled = true;
+  await saveChat();
 
   const apiMessages = state.messages.map(m => {
     if (m.role === "user" && m.attachedData && m.attachedData.type === 'image') {
-       return { role: "user", content: [ { type: "text", text: m.apiContent || m.content }, { type: "image_url", image_url: m.attachedData.data } ] };
+       return { 
+         role: "user", 
+         content: [ 
+           { type: "text", text: m.apiContent || m.content }, 
+           { type: "image_url", image_url: { url: m.attachedData.data } } 
+         ] 
+       };
     }
     return { role: m.role, content: m.apiContent || m.content };
   });
 
-  state.attachedFile = null; updateFilePreview();
+  state.attachedFile = null; 
+  updateFilePreview();
 
   try {
-    const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
-      method: "POST", headers: { "Authorization": `Bearer ${state.apiKey}`, "Content-Type": "application/json" },
+    const headers = {
+      "Authorization": `Bearer ${activeKey}`,
+      "Content-Type": "application/json"
+    };
+
+    if (provider.providerKey === "openrouter") {
+      headers["HTTP-Referer"] = window.location.origin || "http://localhost";
+      headers["X-Title"] = "SYS-NET Studio";
+    }
+
+    const res = await fetch(provider.endpoint, {
+      method: "POST",
+      headers: headers,
       body: JSON.stringify({ model: state.model, messages: apiMessages })
     });
-    if(!res.ok) throw new Error("Erreur de l'API");
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `Erreur HTTP ${res.status}`);
+    }
+
     const data = await res.json();
     state.messages.push({ id: uuid(), role: "assistant", content: data.choices[0].message.content, ts: now() });
-    renderMessages(); await saveChat();
-  } catch (e) { toast("Erreur de connexion à l'IA.", "error"); } finally { $("#send-btn").disabled = false; }
+    renderMessages(); 
+    await saveChat();
+  } catch (e) { 
+    toast(e.message || "Erreur de connexion à l'IA.", "error"); 
+  } finally { 
+    $("#send-btn").disabled = false; 
+  }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
   try { await db.open(); } catch(e) { toast("Erreur de base de données.", "error"); }
   
-  const sel = $("#model-select"); MODELS.forEach(m => { const opt = document.createElement("option"); opt.value = m.id; opt.textContent = m.name; sel.appendChild(opt); });
-  sel.onchange = e => state.model = e.target.value;
-  
-  const key = getLocalKey("api_key"); 
-  if (key && key.length > 10) { 
-    state.apiKey = key; $("#api-status").innerHTML = 'ONLINE'; $("#api-status").className = "status-pill active"; 
+  // Peuplement dynamique du sélecteur par Provider (<optgroup>)
+  const sel = $("#model-select");
+  sel.innerHTML = "";
+  Object.entries(PROVIDERS).forEach(([key, prov]) => {
+    const group = document.createElement("optgroup");
+    group.label = prov.name;
+    prov.models.forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m.id;
+      opt.textContent = m.name;
+      group.appendChild(opt);
+    });
+    sel.appendChild(group);
+  });
+
+  // Rétrocompatibilité : migration de l'ancienne clé unique
+  const oldKey = getLocalKey("api_key");
+  if (oldKey && !getLocalKey("key_mistral")) {
+    setLocalKey("key_mistral", oldKey);
   }
+
+  // Pré-remplissage des champs de clés
+  Object.values(PROVIDERS).forEach(prov => {
+    const val = getLocalKey(prov.storageKey);
+    const input = $(`#${prov.storageKey.replace('_', '-')}`);
+    if (input && val) input.value = val;
+  });
+
+  sel.value = state.model;
+  sel.onchange = e => {
+    state.model = e.target.value;
+    updateStatusPill();
+  };
+
+  updateStatusPill();
   
   if(typeof marked !== 'undefined') {
     marked.setOptions({ breaks: true, gfm: true });
@@ -535,26 +674,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const themeBtn = $("#theme-toggle");
   const htmlDoc = document.documentElement;
-  
   const savedTheme = getLocalKey("theme") || "cyber";
   htmlDoc.setAttribute("data-theme", savedTheme);
-  updateThemeBtnText(savedTheme);
+  themeBtn.innerHTML = savedTheme === "light" ? "🌙 SOMBRE" : "☀️ CLAIR";
 
   themeBtn.onclick = () => {
     const currentTheme = htmlDoc.getAttribute("data-theme");
     const newTheme = currentTheme === "cyber" ? "light" : "cyber";
     htmlDoc.setAttribute("data-theme", newTheme);
     setLocalKey("theme", newTheme);
-    updateThemeBtnText(newTheme);
+    themeBtn.innerHTML = newTheme === "light" ? "🌙 SOMBRE" : "☀️ CLAIR";
   };
-
-  function updateThemeBtnText(theme) {
-    if(theme === "light") {
-      themeBtn.innerHTML = "🌙 SOMBRE";
-    } else {
-      themeBtn.innerHTML = "☀️ CLAIR";
-    }
-  }
 
   initFileUpload();
   await renderArchives(); 
@@ -569,7 +699,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const searchInput = $("#archives-search-input");
   const searchBtn = $("#btn-search-archive");
   const triggerSearch = () => { archiveSearchQuery = searchInput.value; renderArchives(); };
-  
   if (searchInput) searchInput.addEventListener('input', triggerSearch);
   if (searchBtn) searchBtn.addEventListener('click', triggerSearch);
   
@@ -578,17 +707,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   $("#close-editor-modal").onclick = () => $("#editor-modal").classList.remove("active");
   
   $("#save-api-key").onclick = () => { 
-    const k = $("#api-key-input").value.trim(); 
-    if(k.length > 10) {
-      setLocalKey("api_key", k); 
-      state.apiKey = k; 
-      $("#api-status").innerHTML = 'ONLINE'; 
-      $("#api-status").className = "status-pill active";
-      $("#api-modal").classList.remove("active");
-      toast("Clé API enregistrée !", "success");
-    } else {
-      toast("Clé invalide.", "error");
-    }
+    Object.values(PROVIDERS).forEach(prov => {
+      const input = $(`#${prov.storageKey.replace('_', '-')}`);
+      if (input) {
+        const val = input.value.trim();
+        if (val) setLocalKey(prov.storageKey, val);
+      }
+    });
+    updateStatusPill();
+    $("#api-modal").classList.remove("active");
+    toast("Clés API mises à jour !", "success");
   };
 
   $("#user-input").addEventListener('paste', (e) => {
@@ -599,9 +727,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const blob = item.getAsFile();
         const reader = new FileReader();
         reader.onload = (ev) => {
-          if(state.model !== "pixtral-12b-2409") {
-            toast("Astuce : Sélectionnez 'Pixtral' en haut pour analyser les images !", "success");
-          }
           state.attachedFile = { type: 'image', data: ev.target.result, name: 'image_collee.png' };
           updateFilePreview();
         };
@@ -609,7 +734,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
   });
-
 });
 </script>
 </body>
